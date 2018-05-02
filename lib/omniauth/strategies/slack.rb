@@ -106,6 +106,12 @@ module OmniAuth
         scopes = options['scope'].split(',')
         (scopes & bot_scopes).any?
       end
+
+      private
+
+      def callback_url
+        full_host + script_name + callback_path
+      end
     end
   end
 end
