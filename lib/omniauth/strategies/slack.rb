@@ -7,16 +7,16 @@ module OmniAuth
     class Slack < OmniAuth::Strategies::OAuth2
       option :name, 'slack'
 
-      option :authorize_options, [:scope, :team]
+      option :authorize_options, [:scope, :team, :redirect_uri]
 
       option :client_options, {
         site: 'https://slack.com',
-        token_url: '/api/oauth.access'
+        token_url: '/api/oauth.access',
       }
 
       option :auth_token_params, {
         mode: :query,
-        param_name: 'token'
+        param_name: 'token',
       }
 
       uid { raw_info['user_id'] }
@@ -27,7 +27,7 @@ module OmniAuth
           team: raw_info['team'],
           user: raw_info['user'],
           team_id: raw_info['team_id'],
-          user_id: raw_info['user_id']
+          user_id: raw_info['user_id'],
         }
 
         unless skip_info?
@@ -43,7 +43,7 @@ module OmniAuth
             team_domain: team_info['team'].to_h['domain'],
             is_admin: user_info['user'].to_h['is_admin'],
             is_owner: user_info['user'].to_h['is_owner'],
-            time_zone: user_info['user'].to_h['tz']
+            time_zone: user_info['user'].to_h['tz'],
           )
         end
 
@@ -54,13 +54,13 @@ module OmniAuth
         hash = {
           raw_info: raw_info,
           web_hook_info: web_hook_info,
-          bot_info: bot_info
+          bot_info: bot_info,
         }
 
         unless skip_info?
           hash.merge!(
             user_info: user_info,
-            team_info: team_info
+            team_info: team_info,
           )
         end
 
