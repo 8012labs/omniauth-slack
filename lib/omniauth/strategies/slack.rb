@@ -67,16 +67,6 @@ module OmniAuth
         hash
       end
 
-      def authorize_params
-        super.tap do |params|
-          %w[scope team redirect_uri].each do |v|
-            if request.params[v]
-              params[v.to_sym] = request.params[v]
-            end
-          end
-        end
-      end
-
       def raw_info
         @raw_info ||= access_token.get('/api/auth.test').parsed
       end
@@ -120,7 +110,7 @@ module OmniAuth
       private
 
       def callback_url
-        authorize_params.redirect_uri
+        full_host + script_name + callback_path
       end
     end
   end
