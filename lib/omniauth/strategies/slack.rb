@@ -55,6 +55,7 @@ module OmniAuth
           raw_info: raw_info,
           web_hook_info: web_hook_info,
           bot_info: bot_info,
+          params_info: access_token.params,
         }
 
         unless skip_info?
