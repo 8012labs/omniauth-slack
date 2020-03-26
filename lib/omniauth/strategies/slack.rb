@@ -25,9 +25,9 @@ module OmniAuth
 
       info do
         hash = {
-          authed_user_info: authed_user_info,
+          authed_user_info: authed_user_info[:user],
           bot_info: bot_info,
-          team_info: team_info,
+          team_info: team_info[:team],
           web_hook_info: web_hook_info,
         }
 
