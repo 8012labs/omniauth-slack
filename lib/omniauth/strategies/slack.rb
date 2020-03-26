@@ -20,7 +20,7 @@ module OmniAuth
       }
 
       uid {
-        "#{access_token.params["bot_user_id"]}-#{access_token.params.dig("team", "id")}"
+        bot_info[:id]
       }
 
       info do
