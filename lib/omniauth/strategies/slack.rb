@@ -25,7 +25,7 @@ module OmniAuth
 
       info do
         hash = {
-          authed_user_info: user_info,
+          authed_user_info: authed_user_info,
           bot_info: bot_info,
           team_info: team_info,
           web_hook_info: web_hook_info,
@@ -35,14 +35,13 @@ module OmniAuth
       end
 
       def authed_user_info
-        # url = URI.parse("/api/users.info")
-        # url.query = Rack::Utils.build_query(
-        #   user: access_tokens.params["authed_user"]["id"],
-        # )
-        # url = url.to_s
+        url = URI.parse("/api/users.info")
+        url.query = Rack::Utils.build_query(
+          user: access_token.params["authed_user"]["id"],
+        )
+        url = url.to_s
 
-        # @user_info ||= access_token.get(url).parsed
-        access_tokens.params["authed_user"]
+        @user_info ||= access_token.get(url).parsed
       end
 
       def team_info
