@@ -37,7 +37,7 @@ module OmniAuth
       def authed_user_info
         url = URI.parse("/api/users.info")
         url.query = Rack::Utils.build_query(
-          user: access_tokens.params.dig("authed_user", "id"),
+          user: access_tokens.params["authed_user"]["id"],
         )
         url = url.to_s
 
