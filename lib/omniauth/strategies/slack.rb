@@ -35,13 +35,14 @@ module OmniAuth
       end
 
       def authed_user_info
-        url = URI.parse("/api/users.info")
-        url.query = Rack::Utils.build_query(
-          user: access_tokens.params["authed_user"]["id"],
-        )
-        url = url.to_s
+        # url = URI.parse("/api/users.info")
+        # url.query = Rack::Utils.build_query(
+        #   user: access_tokens.params["authed_user"]["id"],
+        # )
+        # url = url.to_s
 
-        @user_info ||= access_token.get(url).parsed
+        # @user_info ||= access_token.get(url).parsed
+        access_tokens.params["authed_user"]
       end
 
       def team_info
