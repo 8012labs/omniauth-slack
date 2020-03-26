@@ -15,7 +15,7 @@ class ClientTest < StrategyTestCase
   end
 
   test "has correct token url" do
-    assert_equal "/api/oauth.access", strategy.client.options[:token_url]
+    assert_equal "/api/oauth.v2.access", strategy.client.options[:token_url]
   end
 end
 
@@ -24,15 +24,15 @@ class CallbackUrlTest < StrategyTestCase
     url_base = "http://auth.request.com"
     @request.stubs(:url).returns("#{url_base}/some/page")
     strategy.stubs(:script_name).returns("") # as not to depend on Rack env
-    assert_equal "#{url_base}/auth/slack/callback", strategy.callback_url
+    assert_equal "#{url_base}/auth/slack/callback", strategy.send("callback_url")
   end
 
   test "returns path from callback_path option" do
-    @options = { :callback_path => "/auth/slack/done"}
+    @options = { :callback_path => "/auth/slack/done" }
     url_base = "http://auth.request.com"
     @request.stubs(:url).returns("#{url_base}/page/path")
     strategy.stubs(:script_name).returns("") # as not to depend on Rack env
-    assert_equal "#{url_base}/auth/slack/done", strategy.callback_url
+    assert_equal "#{url_base}/auth/slack/done", strategy.send("callback_url")
   end
 end
 
@@ -100,7 +100,6 @@ class CredentialsTest < StrategyTestCase
 end
 
 class UserInfoTest < StrategyTestCase
-
   def setup
     super
     @access_token = stub("OAuth2::AccessToken")
@@ -123,18 +122,16 @@ class UserInfoTest < StrategyTestCase
 end
 
 class SkipInfoTest < StrategyTestCase
-
-  test 'info should not include extended info when skip_info is specified' do
+  test "info should not include extended info when skip_info is specified" do
     @options = { skip_info: true }
     strategy.stubs(:raw_info).returns({})
     assert_equal %w[nickname team user team_id user_id], strategy.info.keys.map(&:to_s)
   end
 
-  test 'extra should not include extended info when skip_info is specified' do
+  test "extra should not include extended info when skip_info is specified" do
     @options = { skip_info: true }
     strategy.stubs(:raw_info).returns({})
     strategy.stubs(:webhook_info).returns({})
     assert_equal %w[raw_info web_hook_info bot_info], strategy.extra.keys.map(&:to_s)
   end
-
 end
