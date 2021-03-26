@@ -1,6 +1,6 @@
 require "bundler/setup"
 require "minitest/autorun"
-require "mocha/setup"
+require "mocha/minitest"
 require "omniauth/strategies/slack"
 
 OmniAuth.config.test_mode = true
@@ -55,4 +55,4 @@ class StrategyTestCase < TestCase
   end
 end
 
-Dir[File.expand_path("../support/**/*", __FILE__)].each &method(:require)
+Dir[File.expand_path("../support/**/*", __FILE__)].each { |file| require file }
